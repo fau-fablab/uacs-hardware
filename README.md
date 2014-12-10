@@ -28,7 +28,7 @@ Remark
 ------
 
 Development is still in progress, this is not a final version!<br />
-If you want to contribute, take a look at the [wiki](./.wiki/Contribution).
+If you want to contribute, take a look at the [wiki](https://github.com/fau-fablab/uacs/wiki/Contribution).
 
 PCB
 ---
