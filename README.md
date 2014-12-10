@@ -15,9 +15,9 @@ Usecase(s)
 Features
 --------
 
-* (2.8" touchscreen)[../v2.0/pcb/datasheets/ILI9341.pdf]
-* (ISO/IEC 14443A/MIFARE Reader/Writer (supports e.g. MIFARE Classic + DESFire))[../v2.0/pcb/datasheets/PN532-short.pdf]
-* (ethernet access)[../v2.0/pcb/datasheets/W5100.pdf]
+* [2.8" touchscreen](../v2.0/pcb/datasheets/ILI9341.pdf)
+* [ISO/IEC 14443A/MIFARE Reader/Writer (supports e.g. MIFARE Classic + DESFire)](../v2.0/pcb/datasheets/PN532-short.pdf)
+* [ethernet access](../v2.0/pcb/datasheets/W5100.pdf)
 * powered via 2.1mm DC-Jack (Voltage: 7-50V) or passive POE (power over ethernet)
 * micro-sd-card reader to store data (lcd-background images, caching of authorized rfid cards, ..)
 * multiple IOs (I²C, UART, SPI, digital/analog pins e.g. to control relais or get sensor values)
@@ -33,14 +33,14 @@ PCB
 ---
 
 The terminal is build from two stacked pcbs in order to save space.
-Eagle Layout files and datasheets of used components can be found under (/pcb)[../v2.0/pcb].
+Eagle Layout files and datasheets of used components can be found under [/pcb](../v2.0/pcb).
 
 Firmware
 --------
 
 The firmware is written in arduino (c/c++) since the pcb is arduino mega compatible.
 The backend is (not yet ;)) written in Python.
-All code can be found under (/firmware)[../v2.0/firmware].
+All code can be found under [/firmware](../v2.0/firmware).
 
 License
 -------
