@@ -1,0 +1,58 @@
+POG=-c avrisp2 -P usb
+PMCU=m328p
+GCCMCU=atmega328p
+
+MAGIC:=-DMAGIC0=0x$(shell xxd -p -l 1 /dev/urandom) \
+	-DMAGIC1=0x$(shell xxd -p -l 1 /dev/urandom)
+
+CPUFLAG=-mmcu=$(GCCMCU)
+CC=avr-gcc
+CFLAGS=$(CPUFLAG) $(MAGIC) -DF_CPU=16000000UL -Iavr-crypto/gf256mul -Wall -O2
+ASFLAGS=$(CFLAGS)
+LDFLAGS=$(CPUFLAG)
+OBJCOPY=avr-objcopy
+
+ifneq ($(wildcard getuid-key-faucard.h),)
+	CFLAGS+=-DHAVE_REAL_KEY
+endif
+
+ifneq ($(wildcard getuid-key-faucard-obfuscated.h),)
+	CFLAGS+=-DHAVE_OBFUSCATED_KEY
+endif
+
+CRYPTO_OBJS=avr-crypto/aes/aes_keyschedule.o avr-crypto/aes/aes_sbox.o avr-crypto/aes/aes128_dec.o avr-crypto/aes/aes128_enc.o avr-crypto/aes/aes_dec.o avr-crypto/aes/aes_enc.o avr-crypto/aes/aes_invsbox.o avr-crypto/gf256mul/gf256mul.o
+
+OBJS=getuid-avr.o aes-avr-crypto.o random-avr.o desfire_functions.o faucard_getuid.o avr/usart.o avr/fifo.o avr/spi.o $(CRYPTO_OBJS)
+
+all: getuid-avr.bin
+
+getuid-avr: $(OBJS)
+
+getuid-avr.o: getuid-avr.c
+
+getuid-avr.bin: getuid-avr
+	$(OBJCOPY) -j .text -j .data -O binary $^ $@
+
+flash-external: getuid-avr.bin
+	avrdude -v $(PROG) -p $(PMCU) -U flash:w:$^
+
+flash: getuid-avr.bin
+	while [ 1 ]; do avrdude -v -b 115200 -c arduino -P /dev/ttyUSB0 -p $(PMCU) -U flash:w:$^ && break; done
+
+optiboot:
+	avrdude -v $(PROG) -p $(PMCU) -U hfuse:w:0xd6:m -U lfuse:w:0xff:m -U efuse:w:0x05:m -U lock:w:0x0f:m -U flash:w:optiboot_atmega328.hex
+
+bootloader:
+	avrdude -v $(PROG) -p $(PMCU) -U hfuse:w:0xda:m -U lfuse:w:0xff:m -U efuse:w:0x05:m -U lock:w:0x0f:m -U flash:w:ATmegaBOOT_168_atmega328.hex
+
+reset:
+	avrdude -v $(PROG) -p $(PMCU)
+
+debug: getuid-avr getuid-avr.bin
+	setsid avarice -g -D :4242
+	-avr-gdb -ex 'target remote localhost:4242' getuid-avr
+
+clean:
+	-rm -f $(OBJS) getuid-avr getuid-avr.bin
+
+.PHONY: all clean flash flash-external optiboot bootloader debug reset

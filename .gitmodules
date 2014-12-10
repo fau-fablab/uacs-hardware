@@ -1,0 +1,12 @@
+[submodule "firmware/libraries/ili9341/Adafruit_ILI9341"]
+	path = firmware/libraries/ili9341/Adafruit_ILI9341
+	url = https://github.com/adafruit/Adafruit_ILI9341
+[submodule "firmware/libraries/ili9341/Adafruit-GFX-Library"]
+	path = firmware/libraries/ili9341/Adafruit-GFX-Library
+	url = https://github.com/adafruit/Adafruit-GFX-Library.git
+[submodule "firmware/libraries/ili9341/Adafruit_STMPE610"]
+	path = firmware/libraries/ili9341/Adafruit_STMPE610
+	url = https://github.com/adafruit/Adafruit_STMPE610
+[submodule "firmware/libraries/AVRQueue"]
+	path = firmware/libraries/AVRQueue
+	url = https://github.com/Zuph/AVRQueue.git
