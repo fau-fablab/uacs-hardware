@@ -33,7 +33,7 @@ If you want to contribute, take a look at the [wiki](https://github.com/fau-fabl
 PCB
 ---
 
-The terminal is build from two stacked pcbs in order to save space.<br />
+The terminal is built from two stacked pcbs in order to save space.<br />
 Eagle Layout files and datasheets of used components can be found under [/pcb](../v2.0/pcb).
 
 Firmware
