@@ -4,6 +4,9 @@
 # KDE directory preferences
 .directory
 
+### KiCAD ###
+*.bak
+*.bck
 
 ### C ###
 # Object files
